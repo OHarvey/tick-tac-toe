@@ -1,3 +1,10 @@
+package player;
+
+import grid.Board;
+import grid.Cell;
+import throwables.DuplicateTokenError;
+import types.Tokens;
+
 public class AiPlayer extends Player {
     private Board board;
 
@@ -5,7 +12,6 @@ public class AiPlayer extends Player {
         super(token);
         this.board = board;
     }
-
 
     @Override
     public void move(Cell cell) throws DuplicateTokenError {
