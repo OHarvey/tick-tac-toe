@@ -1,9 +1,15 @@
+package player;
+
+import grid.Board;
+import grid.Cell;
+import throwables.DuplicateTokenError;
+import types.Tokens;
+
 import java.util.Scanner;
 
 public class HumanPlayer extends Player {
 
     private final Board board;
-
 
     public HumanPlayer(Board board, Tokens token) {
         super(token);
@@ -22,14 +28,13 @@ public class HumanPlayer extends Player {
 
     @Override
     public void move() {
-        Response response = new Response().invoke();
+        Response input = new Response().invoke();
         try {
-            move(new Cell(Integer.parseInt(response.getRow()), Integer.parseInt(response.getCol())));
+            move(new Cell(Integer.parseInt(input.getRow()), Integer.parseInt(input.getCol())));
         } catch (DuplicateTokenError duplicateTokenError) {
-            System.out.println("Duplicated Cell.... Try again!");
+            System.out.println("Duplicated grid.Cell.... Try again!");
             move();
         }
-
     }
 
     private class Response {
@@ -50,7 +55,7 @@ public class HumanPlayer extends Player {
             row = scanner.nextLine();
             System.out.println("What Column Do You Want To add To? ");
             col = scanner.nextLine();
-            System.out.println("[" + getCol() +", " + getRow() + "]");
+            System.out.println("Move made: [" + getCol() + ", " + getRow() + "]");
             return this;
         }
     }
