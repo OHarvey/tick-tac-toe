@@ -1,6 +1,6 @@
 package types;
 
-public enum Tokens {
+public enum Token {
 
     O, X, EMPTY
 

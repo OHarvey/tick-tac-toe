@@ -1,43 +1,42 @@
 package grid;
 
 import throwables.DuplicateTokenError;
-import types.Tokens;
+import types.Token;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Board {
 
-    private final Tokens EMPTY = Tokens.EMPTY;
-    private Tokens[][] grid;
+    private final Token EMPTY = Token.EMPTY;
+    private Token[][] grid;
 
     public Board() {
-        grid = new Tokens[][]{
+        grid = new Token[][]{
                 {EMPTY, EMPTY, EMPTY},
                 {EMPTY, EMPTY, EMPTY},
                 {EMPTY, EMPTY, EMPTY}
         };
     }
 
-    public Tokens[][] grid() {
+    public Token[][] grid() {
         return grid;
     }
 
 
-    public void add(Tokens token, Cell cell) throws DuplicateTokenError {
-        if (grid()[cell.getX()][cell.getY()] == Tokens.EMPTY) {
+    public void add(Token token, Cell cell) throws DuplicateTokenError {
+        if (grid()[cell.getX()][cell.getY()] == Token.EMPTY) {
             this.grid[cell.getX()][cell.getY()] = token;
         } else {
             throw new DuplicateTokenError("Token: " + token + " at grid.Cell: " + cell);
         }
     }
 
-    public Tokens tokenAtIndex(Cell cell) {
+    public Token tokenAtIndex(Cell cell) {
         return this.grid[cell.getX()][cell.getY()];
     }
 
-    public List<List<Cell>> getAllLines() {
+    public List<Line> getAllLines() {
         Cell topRight = new Cell(0, 0);
         Cell topMiddle = new Cell(0, 1);
         Cell topLeft = new Cell(0, 2);
@@ -50,17 +49,17 @@ public class Board {
         Cell bottomMiddle = new Cell(2, 1);
         Cell bottomLeft = new Cell(2, 2);
 
-        List<List<Cell>> lines = new ArrayList<>();
-        lines.add(Arrays.asList(topRight, middleRight, bottomRight));
-        lines.add(Arrays.asList(topMiddle, middleMiddle, bottomMiddle));
-        lines.add(Arrays.asList(topLeft, middleLeft, bottomLeft));
+        List<Line> lines = new ArrayList<>();
+        lines.add(new Line(topRight, middleRight, bottomRight));
+        lines.add(new Line(topMiddle, middleMiddle, bottomMiddle));
+        lines.add(new Line(topLeft, middleLeft, bottomLeft));
 
-        lines.add(Arrays.asList(topRight, topMiddle, topLeft));
-        lines.add(Arrays.asList(middleRight, middleMiddle, middleLeft));
-        lines.add(Arrays.asList(bottomRight, bottomMiddle, bottomLeft));
+        lines.add(new Line(topRight, topMiddle, topLeft));
+        lines.add(new Line(middleRight, middleMiddle, middleLeft));
+        lines.add(new Line(bottomRight, bottomMiddle, bottomLeft));
 
-        lines.add(Arrays.asList(topLeft, middleMiddle, bottomRight));
-        lines.add(Arrays.asList(topRight, middleMiddle, bottomLeft));
+        lines.add(new Line(topLeft, middleMiddle, bottomRight));
+        lines.add(new Line(topRight, middleMiddle, bottomLeft));
 
         return lines;
     }

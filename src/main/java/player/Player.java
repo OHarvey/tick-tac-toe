@@ -2,26 +2,14 @@ package player;
 
 import grid.Cell;
 import throwables.DuplicateTokenError;
-import types.Tokens;
+import types.Token;
 
-public abstract class Player {
+public interface Player {
 
-    Tokens token;
+    void move(Cell cell) throws DuplicateTokenError;
 
-    public Player(Tokens token) {
-        this.token = token;
-    }
+    void move();
 
-    public abstract void move(Cell cell) throws DuplicateTokenError;
+    Token getToken();
 
-    public abstract void move();
-
-    public Tokens getToken() {
-        return token;
-    }
-
-    @Override
-    public String toString() {
-        return getClass().getCanonicalName().toString();
-    }
 }

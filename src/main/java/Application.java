@@ -1,32 +1,33 @@
 import grid.Board;
+import interactions.CliPrinter;
+import interactions.Response;
 import player.AiPlayer;
 import player.HumanPlayer;
 import player.Player;
-import types.Tokens;
-
-import java.util.Scanner;
+import types.Token;
 
 public class Application {
 
     private static Board gameBoard;
-    private static Tokens token;
-    private static Scanner scanner = new Scanner(System.in);
+    private static final CliPrinter cliPrinter = new CliPrinter();
+    private static Token token;
     private static Player HUMAN;
     private static Player COMPUTER;
 
     public static void main(String[] args) {
-
-        System.out.println("Starting Game");
+        cliPrinter.print("**** Starting Game ****");
         setUserToken();
         init();
+
         Player currentPlayer = HUMAN;
-        while (Referee.whoWon(gameBoard) == null) {
-            System.out.println("player.Player: " + currentPlayer + " - " + currentPlayer.getToken());
-            System.out.println(gameBoard);
+        while (Referee.whoWon(gameBoard) == Token.EMPTY) {
+            cliPrinter.print("*** New Turn: " + currentPlayer + " - " + currentPlayer.getToken());
+            cliPrinter.print(gameBoard.toString());
 
             currentPlayer.move();
 
             currentPlayer = swapPlayer(currentPlayer);
+            cliPrinter.print("End Of Turn ");
         }
     }
 
@@ -44,9 +45,9 @@ public class Application {
         return (currentPlayer instanceof AiPlayer) ? HUMAN : COMPUTER;
     }
 
-    private static void setUpPlayers(Tokens token) {
+    private static void setUpPlayers(Token token) {
         HUMAN = new HumanPlayer(gameBoard, token);
-        Tokens aiToken = (token == Tokens.X) ? Tokens.O : Tokens.X;
+        Token aiToken = (token == Token.X) ? Token.O : Token.X;
         COMPUTER = new AiPlayer(gameBoard, aiToken);
     }
 
@@ -55,16 +56,15 @@ public class Application {
     }
 
     private static void setUserToken() {
-        System.out.println("Choose your token: X or O ");
-        token = convertToToken(scanner.nextLine());
-        System.out.println(token);
+        Response response = new Response().invoke("What Token do you want to be? X or O?");
+        token = convertToToken(response.getResponse());
     }
 
-    private static Tokens convertToToken(String s) throws IllegalArgumentException {
+    private static Token convertToToken(String s) throws IllegalArgumentException {
         if (s.equalsIgnoreCase("x")) {
-            return Tokens.X;
+            return Token.X;
         } else if (s.equalsIgnoreCase("o")) {
-            return Tokens.O;
+            return Token.O;
         }
         throw new IllegalArgumentException("There wasnt a x or an o!");
     }

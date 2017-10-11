@@ -3,19 +3,19 @@ package grid;
 
 import org.junit.Test;
 import throwables.DuplicateTokenError;
-import types.Tokens;
+import types.Token;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class BoardShould {
-    Tokens EMPTY = Tokens.EMPTY;
+    Token EMPTY = Token.EMPTY;
 
     @Test
     public void beEmptyOnCreation(){
         Board board = new Board();
 
-        assertThat(board.grid(), is(new Tokens[][]{{EMPTY, EMPTY, EMPTY}, {EMPTY, EMPTY, EMPTY},{EMPTY, EMPTY, EMPTY}}));
+        assertThat(board.grid(), is(new Token[][]{{EMPTY, EMPTY, EMPTY}, {EMPTY, EMPTY, EMPTY}, {EMPTY, EMPTY, EMPTY}}));
     }
 
     @Test
@@ -23,9 +23,9 @@ public class BoardShould {
         Board board = new Board();
         Cell cell = new Cell(2, 2);
 
-        board.add(Tokens.O, cell);
+        board.add(Token.O, cell);
 
-        assertThat(board.grid(), is(new Tokens[][]{{EMPTY, EMPTY, EMPTY}, {EMPTY, EMPTY, EMPTY},{EMPTY, EMPTY, Tokens.O}}));
+        assertThat(board.grid(), is(new Token[][]{{EMPTY, EMPTY, EMPTY}, {EMPTY, EMPTY, EMPTY}, {EMPTY, EMPTY, Token.O}}));
     }
 
     @Test
@@ -33,10 +33,10 @@ public class BoardShould {
         Board board = new Board();
         Cell cell = new Cell(2, 0);
 
-        board.add(Tokens.O, cell);
+        board.add(Token.O, cell);
 
 
-        assertThat(board.tokenAtIndex(cell), is(Tokens.O));
+        assertThat(board.tokenAtIndex(cell), is(Token.O));
     }
 
     @Test(expected = DuplicateTokenError.class)
@@ -44,8 +44,8 @@ public class BoardShould {
         Board board = new Board();
         Cell cell = new Cell(2, 0);
 
-        board.add(Tokens.O, cell);
-        board.add(Tokens.X, cell);
+        board.add(Token.O, cell);
+        board.add(Token.X, cell);
     }
 
 }

@@ -2,15 +2,19 @@ package player;
 
 import grid.Board;
 import grid.Cell;
+import interactions.CliPrinter;
 import throwables.DuplicateTokenError;
-import types.Tokens;
+import types.Token;
 
-public class AiPlayer extends Player {
-    private Board board;
+public class AiPlayer implements Player {
+    private final Token token;
+    private final Board board;
+    private final CliPrinter cliPrinter;
 
-    public AiPlayer(Board board, Tokens token) {
-        super(token);
+    public AiPlayer(Board board, Token token) {
+        this.token = token;
         this.board = board;
+        cliPrinter = new CliPrinter();
     }
 
     @Override
@@ -20,6 +24,15 @@ public class AiPlayer extends Player {
 
     @Override
     public void move() {
-        System.out.println("Doing Nothing... for now. ");
+        cliPrinter.print("Doing Nothing... for now. ");
+    }
+
+    public Token getToken() {
+        return token;
+    }
+
+    @Override
+    public String toString() {
+        return "Machine";
     }
 }

@@ -3,7 +3,7 @@ import org.junit.Test;
 import player.AiPlayer;
 import player.HumanPlayer;
 import player.Player;
-import types.Tokens;
+import types.Token;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -25,7 +25,7 @@ public class ApplicationShould {
     @Test
     public void swapPlayersAfterEachTurn(){
         Application application = new Application();
-        Player currentPlayer = new HumanPlayer(application.getGameBoard(), Tokens.X);
+        Player currentPlayer = new HumanPlayer(application.getGameBoard(), Token.X);
         Application.setHuman(currentPlayer);
         Application.init();
 
